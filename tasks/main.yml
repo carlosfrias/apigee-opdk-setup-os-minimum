@@ -67,7 +67,7 @@
 - name: Keep yum downloads small
   yum:
     name: "{{ item }}"
-    state: latest
+    state: present
   with_items:
   - deltarpm
   when: epel_repo.changed
@@ -83,7 +83,7 @@
 - name: Update basic yum os packages
   yum:
     name: "{{ item }}"
-    state: latest
+    state: present
   with_items:
   - bind-utils
   - chkconfig
@@ -96,6 +96,8 @@
   - which
   - libselinux-python
   - nss
+  - openssh-clients
+  - openssh-server
 
 - name: Update for apigee installation environment
   lineinfile:
