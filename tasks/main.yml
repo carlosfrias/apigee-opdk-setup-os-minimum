@@ -1,0 +1,130 @@
+---
+# tasks file for opdk-setup-os
+- name: Update vm.swappiness
+  lineinfile:
+    dest: /etc/sysctl.conf
+    regexp: "^(vm.swappiness)"
+    line: '\1 = {{ vm_swappiness }}'
+    backup: yes
+    backrefs: yes
+
+- name: Add yum epel repository for centos 7 or greater
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - epel-release
+  when: ansible_distribution_version | version_compare('7', '>=') and ansible_distribution | lower == "centos"
+  register: epel_repo
+  tags:
+  - epel
+
+- name: Add yum epel repository for centos 6 or less
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - epel-release
+    - centos-release-SCL
+  when: ansible_distribution_version | version_compare('7', '<') and ansible_distribution | lower == "centos"
+  register: epel_repo
+  tags:
+  - epel
+
+- name: Add yum epel repository for Oracle Linux 6
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - '{{ epel_ol6 }}'
+  when: ansible_distribution_version | version_compare('7', '<') and ansible_distribution | lower == "oraclelinux"
+  register: epel_repo
+  tags:
+  - epel
+
+- name: Add yum epel repository for redhat version 7
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - '{{ epel_rhel7 }}'
+  when: ansible_distribution_version | version_compare('7', '>=') | lower == "redhat"
+  register: epel_repo
+  tags:
+  - epel
+
+- name: Proactively remove qpid packages that cause yum update failures, ignore errors
+  yum:
+    name: '{{ item }}'
+    state: absent
+  with_items:
+  - apigee-qpidd-*
+  - qpid-*
+  - python-qpid*
+  - libqpid*
+  ignore_errors: true
+
+- name: Keep yum downloads small
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+  - deltarpm
+  when: epel_repo.changed
+
+- name: Speed up yum
+  shell: yum makecache {{ item }}
+  with_items:
+  - yum-presto
+  - fast
+  when: epel_repo.changed
+  register: yum_status
+
+- name: Update basic yum os packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+  - bind-utils
+  - chkconfig
+  - curl
+  - tar
+  - wget
+  - yum-utils
+  - unzip
+  - rsync
+  - which
+  - libselinux-python
+  - nss
+
+- name: Update for apigee installation environment
+  lineinfile:
+    dest: /etc/environment
+    regexp: "^export CONTINUE_ON_WARNING="
+    line: 'export CONTINUE_ON_WARNING={{ apigee_continue_on_warning }}'
+    backup: yes
+
+- name: Add pip package manager
+  get_url:
+    url: https://bootstrap.pypa.io/get-pip.py
+    dest: /tmp/get-pip.py
+
+- name: Install pip package manager
+  shell: python /tmp/get-pip.py
+
+- name: Update pip package manager
+  shell: 'pip install --upgrade pip'
+  register: pip_status
+
+- name: Update python packages
+  register: pip_status
+  pip:
+    name: '{{ item }}'
+    state: present
+  with_items:
+  - httplib2
+  - pexpect
+  - passlib
+  - requests
+  - kazoo
+

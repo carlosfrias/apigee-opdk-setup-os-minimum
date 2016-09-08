@@ -1,0 +1,12 @@
+---
+# Defaults for internal environment OPDK setup settings
+apigee_continue_on_warning: y
+
+# Default value to limit swap file use
+vm_swappiness: 60
+
+# Default epel repo for EL 6
+epel_ol6: https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+
+# Default epel repo for EL 7
+epel_rhel7: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
