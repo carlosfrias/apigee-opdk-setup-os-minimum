@@ -8,50 +8,56 @@
     backup: yes
     backrefs: yes
 
-- name: Add yum epel repository for centos 7 or greater
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items:
+- block:
+
+  - name: Add yum epel repository for centos 6 or less
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+      - centos-release-SCL
+    when: ansible_distribution | lower == "centos"
+    register: epel_repo
+    tags:
+    - epel
+
+  - name: Add yum epel repository for Oracle Linux 6
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - '{{ epel_ol6 }}'
+    when: ansible_distribution | lower == "oraclelinux"
+    register: epel_repo
+    tags:
+    - epel
+
+  when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '<')
+
+- block:
+
+  - name: Add yum epel repository for redhat version 7
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
     - epel-release
-  when: ansible_distribution_version | version_compare('7', '>=') and ansible_distribution | lower == "centos"
-  register: epel_repo
-  tags:
-  - epel
+    register: epel_repo
+    tags:
+    - epel
 
-- name: Add yum epel repository for centos 6 or less
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items:
-    - epel-release
-    - centos-release-SCL
-  when: ansible_distribution_version | version_compare('7', '<') and ansible_distribution | lower == "centos"
-  register: epel_repo
-  tags:
-  - epel
-
-- name: Add yum epel repository for Oracle Linux 6
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items:
-  - '{{ epel_ol6 }}'
-  when: ansible_distribution_version | version_compare('7', '<') and ansible_distribution | lower == "oraclelinux"
-  register: epel_repo
-  tags:
-  - epel
-
-- name: Add yum epel repository for redhat version 7
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items:
+  - name: Add another yum epel repository for redhat version 7
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
     - '{{ epel_rhel7 }}'
-  when: ansible_distribution_version | version_compare('7', '>=') | lower == "redhat"
-  register: epel_repo
-  tags:
-  - epel
+    when: ansible_distribution is defined and ansible_distribution | lower == 'redhat'
+    register: epel_repo
+    tags:
+    - epel
+
+  when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '>=')
 
 - name: Proactively remove qpid packages that cause yum update failures, ignore errors
   yum:
