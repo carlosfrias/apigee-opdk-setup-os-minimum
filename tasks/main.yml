@@ -16,14 +16,6 @@
 
   when: ansible_bios_version is defined and ansible_bios_version | lower | search('amazon')
 
-#- name: Update vm.swappiness
-#  lineinfile:
-#    dest: /etc/sysctl.conf
-#    regexp: "^(vm.swappiness)"
-#    line: '\1 = {{ vm_swappiness }}'
-#    backup: yes
-#    backrefs: yes
-
 - name: Update vm.swappiness
   sysctl:
     name: vm.swappiness
