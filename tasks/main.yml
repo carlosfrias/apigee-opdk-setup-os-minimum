@@ -16,12 +16,6 @@
 
   when: ansible_bios_version is defined and ansible_bios_version | lower | search('amazon')
 
-- name: Update vm.swappiness
-  sysctl:
-    name: vm.swappiness
-    value: '{{ vm_swappiness }}'
-    state: present
-
 - block:
 
   - name: Add yum epel repository for centos 6 or less
@@ -118,6 +112,12 @@
   - nss
   - openssh-clients
   - openssh-server
+
+- name: Update vm.swappiness
+  sysctl:
+    name: vm.swappiness
+    value: '{{ vm_swappiness }}'
+    state: present
 
 - name: Update for apigee installation environment
   lineinfile:
