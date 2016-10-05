@@ -19,6 +19,7 @@
 - block:
 
   - name: Add yum epel repository for centos 6 or less
+    become: yes
     yum:
       name: "{{ item }}"
       state: present
@@ -30,6 +31,7 @@
     - epel
 
   - name: Add yum epel repository for Oracle Linux 6
+    become: yes
     yum:
       name: "{{ item }}"
       state: present
@@ -45,6 +47,7 @@
 - block:
 
   - name: Add yum epel repository for redhat version 7
+    become: yes
     yum:
       name: "{{ item }}"
       state: present
@@ -55,6 +58,7 @@
     - epel
 
   - name: Add another yum epel repository for redhat version 7
+    become: yes
     yum:
       name: "{{ item }}"
       state: present
@@ -68,6 +72,7 @@
   when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '>=')
 
 - name: Proactively remove qpid packages that cause yum update failures, ignore errors
+  become: yes
   yum:
     name: '{{ item }}'
     state: absent
@@ -79,6 +84,7 @@
   ignore_errors: true
 
 - name: Keep yum downloads small
+  become: yes
   yum:
     name: "{{ item }}"
     state: present
@@ -87,6 +93,7 @@
   when: epel_repo.changed
 
 - name: Speed up yum
+  become: yes
   shell: yum makecache {{ item }}
   with_items:
   - yum-presto
@@ -95,6 +102,7 @@
   register: yum_status
 
 - name: Update basic yum os packages
+  become: yes
   yum:
     name: "{{ item }}"
     state: present
@@ -114,12 +122,14 @@
   - openssh-server
 
 - name: Update vm.swappiness
+  become: yes
   sysctl:
     name: vm.swappiness
     value: '{{ vm_swappiness }}'
     state: present
 
 - name: Update for apigee installation environment
+  become: yes
   lineinfile:
     dest: /etc/environment
     regexp: "^export CONTINUE_ON_WARNING="
@@ -127,18 +137,22 @@
     backup: yes
 
 - name: Add pip package manager
+  become: yes
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
     dest: /tmp/get-pip.py
 
 - name: Install pip package manager
+  become: yes
   shell: python /tmp/get-pip.py
 
 - name: Update pip package manager
+  become: yes
   shell: 'pip install --upgrade pip'
   register: pip_status
 
 - name: Update python packages
+  become: yes
   register: pip_status
   pip:
     name: '{{ item }}'
@@ -149,4 +163,3 @@
   - passlib
   - requests
   - kazoo
-
