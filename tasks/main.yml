@@ -91,6 +91,8 @@
   with_items:
   - deltarpm
   when: epel_repo.changed
+  tags:
+  - epel
 
 - name: Speed up yum
   become: yes
@@ -100,6 +102,8 @@
   - fast
   when: epel_repo.changed
   register: yum_status
+  tags:
+  - epel
 
 - name: Update basic yum os packages
   become: yes
