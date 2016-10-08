@@ -1,5 +1,5 @@
 ---
-# tasks file for opdk-setup-os
+# tasks file for apigee-opdk-setup-os
 - name: Collect setup facts
   setup:
 
