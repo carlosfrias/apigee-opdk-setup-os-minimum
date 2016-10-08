@@ -132,7 +132,7 @@
     value: '{{ vm_swappiness }}'
     state: present
   tags:
-  - sysctl
+  - os_tuning
 
 - name: Update for apigee installation environment
   become: yes
