@@ -16,6 +16,25 @@
 
   when: ansible_bios_version is defined and ansible_bios_version | lower | search('amazon')
 
+- name: Yum clean
+  become: yes
+  shell: yum clean all
+
+- block:
+
+  - name: Update SSL certificates, disablerepo=epel
+    become: yes
+    shell: yum upgrade ca-certificates --disablerepo=epel
+    tags:
+    - epel
+
+  rescue:
+    - name: Update SSL certificates, don't use disablerepo=epel
+      become: yes
+      shell: yum upgrade ca-certificates
+      tags:
+      - epel
+
 - block:
 
   - name: Add yum epel repository for centos 6 or less
@@ -71,6 +90,12 @@
 
   when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '>=')
 
+#- name: Hack epel repo list
+#  replace:
+#    dest: /etc/yum.repos.d/epel.repo
+#    regexp: "^(mirrorlist=https)(.*)"
+#    replace: 'mirrorlist=http\2'
+
 - name: Proactively remove qpid packages that cause yum update failures, ignore errors
   become: yes
   yum:
@@ -90,7 +115,7 @@
     state: present
   with_items:
   - deltarpm
-  when: epel_repo.changed
+  register: yum_status
   tags:
   - epel
 
@@ -100,7 +125,7 @@
   with_items:
   - yum-presto
   - fast
-  when: epel_repo.changed
+  when: yum_status.changed
   register: yum_status
   tags:
   - epel
@@ -124,6 +149,11 @@
   - nss
   - openssh-clients
   - openssh-server
+  - sudo
+  - grep
+  - rpm
+  - sed
+  - unzip
 
 - name: Update vm.swappiness
   become: yes
@@ -147,18 +177,19 @@
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
     dest: /tmp/get-pip.py
+  tags:
+  - pip
 
 - name: Install pip package manager
   become: yes
   shell: python /tmp/get-pip.py
-
-- name: Update pip package manager
-  become: yes
-  shell: 'pip install --upgrade pip'
-  register: pip_status
+  tags:
+  - pip
 
 - name: Update python packages
   become: yes
+  tags:
+  - pip
   register: pip_status
   pip:
     name: '{{ item }}'
