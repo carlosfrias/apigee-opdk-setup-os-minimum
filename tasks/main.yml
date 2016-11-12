@@ -22,16 +22,34 @@
 
 - block:
 
+#  - name: Update SSL certificates, disablerepo=epel
+#    become: yes
+#    shell: yum upgrade ca-certificates --disablerepo=epel
+#    tags:
+#    - epel
+
   - name: Update SSL certificates, disablerepo=epel
     become: yes
-    shell: yum upgrade ca-certificates --disablerepo=epel
+    yum:
+      name: ca-certificates
+      disablerepo: epel
+      update_cache: yes
+      state: latest
     tags:
     - epel
 
   rescue:
+#    - name: Update SSL certificates, don't use disablerepo=epel
+#      become: yes
+#      shell: yum upgrade ca-certificates
+#      tags:
+#      - epel
     - name: Update SSL certificates, don't use disablerepo=epel
       become: yes
-      shell: yum upgrade ca-certificates
+      yum:
+        name: ca-certificates
+        update_cache: yes
+        state: latest
       tags:
       - epel
 
@@ -129,6 +147,11 @@
   register: yum_status
   tags:
   - epel
+
+- name: Update yum
+  yum:
+    name: '*'
+    state: latest
 
 - name: Update basic yum os packages
   become: yes
