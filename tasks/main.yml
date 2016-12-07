@@ -84,6 +84,7 @@
 - block:
 
   - name: Add yum epel repository for redhat version 7
+    ignore_errors: yes
     become: yes
     yum:
       name: "{{ item }}"
@@ -96,7 +97,7 @@
 
   rescue:
 
-    - name: Add another yum epel repository for redhat version 7
+    - name: Add yum epel repository for redhat version 7
       become: yes
       yum:
         name: "{{ item }}"
