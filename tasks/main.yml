@@ -94,17 +94,19 @@
     tags:
     - epel
 
-  - name: Add another yum epel repository for redhat version 7
-    become: yes
-    yum:
-      name: "{{ item }}"
-      state: present
-    with_items:
-    - '{{ epel_rhel7 }}'
-    when: ansible_distribution is defined and ansible_distribution | lower == 'redhat'
-    register: epel_repo
-    tags:
-    - epel
+  rescue:
+
+    - name: Add another yum epel repository for redhat version 7
+      become: yes
+      yum:
+        name: "{{ item }}"
+        state: present
+      with_items:
+      - '{{ epel_rhel7 }}'
+      when: ansible_distribution is defined and ansible_distribution | lower == 'redhat'
+      register: epel_repo
+      tags:
+      - epel
 
   when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '>=')
 
