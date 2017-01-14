@@ -5,13 +5,11 @@ apigee_continue_on_warning: y
 # Default value to limit swap file use
 vm_swappiness: 60
 
-# Default epel repo for EL 6
+# Default epel repo for OracleLinux 6
 epel_ol6: http://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
-#epel_ol6: https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-#epel_ol6: http://dl.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
-#epel_ol6: http://mirror.sfo12.us.leaseweb.net/epel//epel-release-latest-6.noarch.rpm
 
-# Default epel repo for EL 7
+# Default epel repo for RHEL 7
 epel_rhel7: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
+# Default epel repo for RHEL 6
 epel_rhel6: https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
