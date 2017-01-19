@@ -6,10 +6,10 @@ apigee_continue_on_warning: y
 vm_swappiness: 60
 
 # Default epel repo for OracleLinux 6
-epel_ol6: http://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+epel_rhel6: http://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
 
 # Default epel repo for RHEL 7
 epel_rhel7: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 # Default epel repo for RHEL 6
-epel_rhel6: https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+#epel_rhel6: https://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm

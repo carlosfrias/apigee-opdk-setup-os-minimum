@@ -54,7 +54,7 @@
 
 - block:
 
-  - name: Add yum epel repository for centos 6 or less
+  - name: Add yum centos-releas-SCL repository for CentOS 6
     become: yes
     yum:
       name: "{{ item }}"
@@ -62,19 +62,16 @@
     with_items:
       - centos-release-SCL
     when: ansible_distribution | lower == "centos"
-    register: epel_repo
     tags:
     - epel
 
-  - name: Add yum epel repository for Oracle Linux 6
+  - name: Add yum epel repository for Redhat/CentOS 6.x
     become: yes
     yum:
       name: "{{ item }}"
       state: present
     with_items:
-    - '{{ epel_ol6 }}'
-    when: ansible_distribution | lower == "oraclelinux"
-    register: epel_repo
+    - '{{ epel_rhel6 }}'
     tags:
     - epel
 
@@ -82,7 +79,7 @@
 
 - block:
 
-  - name: Add yum epel repository for redhat version 7
+  - name: Add yum epel repository for Redhat/CentOS 7.x
     ignore_errors: yes
     become: yes
     yum:
@@ -90,7 +87,6 @@
       state: present
     with_items:
     - '{{ epel_rhel7 }}'
-    register: epel_repo
     tags:
     - epel
 
@@ -103,7 +99,6 @@
 #        state: present
 #      with_items:
 #      when: ansible_distribution is defined and ansible_distribution | lower == 'redhat'
-#      register: epel_repo
 #      tags:
 #      - epel
 
