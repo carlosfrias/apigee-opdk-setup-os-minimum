@@ -20,38 +20,6 @@
   become: yes
   shell: yum clean all
 
-#- block:
-
-#  - name: Update SSL certificates, disablerepo=epel
-#    become: yes
-#    shell: yum upgrade ca-certificates --disablerepo=epel
-#    tags:
-#    - epel
-
-#  - name: Update SSL certificates, disablerepo=epel
-#    become: yes
-#    yum:
-#      name: ca-certificates
-#      disablerepo: epel
-#      update_cache: yes
-#      state: latest
-#    tags:
-#    - epel
-
-#  rescue:
-#    - name: Update SSL certificates, don't use disablerepo=epel
-#      become: yes
-#      shell: yum upgrade ca-certificates
-#      tags:
-#      - epel
-#- name: Update SSL certificates, don't use disablerepo=epel
-#  become: yes
-#  yum:
-#    name: ca-certificates
-#    state: latest
-#  tags:
-#  - epel
-
 - block:
 
   - name: Add yum centos-releas-SCL repository for CentOS 6
@@ -90,25 +58,7 @@
     tags:
     - epel
 
-#  rescue:
-#
-#    - name: Add yum epel repository for redhat version 7
-#      become: yes
-#      yum:
-#        name: "{{ item }}"
-#        state: present
-#      with_items:
-#      when: ansible_distribution is defined and ansible_distribution | lower == 'redhat'
-#      tags:
-#      - epel
-
   when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '>=')
-
-#- name: Hack epel repo list
-#  replace:
-#    dest: /etc/yum.repos.d/epel.repo
-#    regexp: "^(mirrorlist=https)(.*)"
-#    replace: 'mirrorlist=http\2'
 
 - name: Proactively remove qpid packages that cause yum update failures, ignore errors
   become: yes
@@ -144,11 +94,6 @@
 #  tags:
 #  - epel
 
-#- name: Update yum
-#  yum:
-#    name: '*'
-#    state: latest
-
 - name: Update basic yum os packages
   become: yes
   yum:
@@ -182,6 +127,12 @@
     state: present
   tags:
   - os_tuning
+
+- name: Disable Default IPV6
+  shell: "sysctl -w net.ipv6.conf.default.disable_ipv6=1"
+
+- name: Disable All IPV6
+  shell: "sysctl -w net.ipv6.conf.all.disable_ipv6=1"
 
 - name: Update for apigee installation environment
   become: yes
