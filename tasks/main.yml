@@ -116,8 +116,15 @@
   - sudo
   - grep
   - rpm
+  - rng-tools
   - sed
   - unzip
+
+- name: Start rngd service
+  service:
+    name: rngd
+    enabled: yes
+    state: started
 
 - name: Update vm.swappiness
   become: yes
