@@ -41,7 +41,6 @@
 - block:
 
   - name: Add yum epel repository for Redhat/CentOS 7.x
-    ignore_errors: yes
     become: yes
     yum:
       name: "{{ item }}"
@@ -63,7 +62,6 @@
   - qpid-*
   - python-qpid*
   - libqpid*
-  ignore_errors: true
 
 #- name: Keep yum downloads small
 #  become: yes
