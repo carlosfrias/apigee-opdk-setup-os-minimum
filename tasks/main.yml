@@ -69,27 +69,20 @@
 #  - python-qpid*
 #  - libqpid*
 
-#- name: Keep yum downloads small
-#  become: yes
-#  yum:
-#    name: "{{ item }}"
-#    state: present
-#  with_items:
-#  - deltarpm
-#  register: yum_status
-#  tags:
-#  - epel
+- name: Keep yum downloads small
+  become: yes
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - deltarpm
 
-#- name: Speed up yum
-#  become: yes
-#  shell: yum makecache {{ item }}
-#  with_items:
-#  - yum-presto
-#  - fast
-#  when: yum_status.changed
-#  register: yum_status
-#  tags:
-#  - epel
+- name: Speed up yum
+  become: yes
+  shell: yum makecache {{ item }}
+  with_items:
+  - yum-presto
+  - fast
 
 - name: Update basic yum os packages
   become: yes
