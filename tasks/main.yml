@@ -23,8 +23,6 @@
     with_items:
       - centos-release-SCL
     when: ansible_distribution | lower == "centos"
-    tags:
-    - epel
 
   - name: Add yum epel repository for Redhat/CentOS 6.x
     become: yes
@@ -33,8 +31,6 @@
       state: present
     with_items:
     - '{{ epel_rhel6 }}'
-    tags:
-    - epel
 
   when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '<')
 
@@ -47,8 +43,6 @@
       state: present
     with_items:
     - '{{ epel_rhel7 }}'
-    tags:
-    - epel
 
   when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '>=')
 
@@ -116,8 +110,6 @@
     name: vm.swappiness
     value: '{{ vm_swappiness }}'
     state: present
-  tags:
-  - os_tuning
 
 - name: Disable Default IPV6
   become: yes
@@ -140,20 +132,13 @@
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
     dest: /tmp/get-pip.py
-  tags:
-  - pip
 
 - name: Install pip package manager
   become: yes
   shell: python /tmp/get-pip.py
-  tags:
-  - pip
 
 - name: Update python packages
   become: yes
-  tags:
-  - pip
-  register: pip_status
   pip:
     name: '{{ item }}'
     state: present
