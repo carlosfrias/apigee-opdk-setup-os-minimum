@@ -13,38 +13,38 @@
   become: yes
   shell: yum clean all
 
-- block:
+#- block:
+#
+#  - name: Add yum centos-release-SCL repository for CentOS 6
+#    become: yes
+#    yum:
+#      name: "{{ item }}"
+#      state: present
+#    with_items:
+#      - centos-release-SCL
+#    when: ansible_distribution | lower == "centos"
+#
+#  - name: Add yum epel repository for Redhat/CentOS 6.x
+#    become: yes
+#    yum:
+#      name: "{{ item }}"
+#      state: present
+#    with_items:
+#    - '{{ epel_rhel6 }}'
+#
+#  when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '<')
 
-  - name: Add yum centos-release-SCL repository for CentOS 6
-    become: yes
-    yum:
-      name: "{{ item }}"
-      state: present
-    with_items:
-      - centos-release-SCL
-    when: ansible_distribution | lower == "centos"
-
-  - name: Add yum epel repository for Redhat/CentOS 6.x
-    become: yes
-    yum:
-      name: "{{ item }}"
-      state: present
-    with_items:
-    - '{{ epel_rhel6 }}'
-
-  when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '<')
-
-- block:
-
-  - name: Add yum epel repository for Redhat/CentOS 7.x
-    become: yes
-    yum:
-      name: "{{ item }}"
-      state: present
-    with_items:
-    - '{{ epel_rhel7 }}'
-
-  when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '>=')
+#- block:
+#
+#  - name: Add yum epel repository for Redhat/CentOS 7.x
+#    become: yes
+#    yum:
+#      name: "{{ item }}"
+#      state: present
+#    with_items:
+#    - '{{ epel_rhel7 }}'
+#
+#  when: ansible_distribution_major_version is defined and ansible_distribution_major_version | version_compare('7', '>=')
 
 #- name: Proactively remove qpid packages that cause yum update failures, ignore errors
 #  become: yes
