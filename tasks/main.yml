@@ -91,7 +91,6 @@
   - nss
   - openssh-clients
   - openssh-server
-  - sudo
   - grep
   - rpm
   - rng-tools
@@ -127,7 +126,13 @@
     line: 'export CONTINUE_ON_WARNING={{ apigee_continue_on_warning }}'
     backup: yes
 
-- name: Add pip package manager
+- name: Configure pip
+  template:
+    src: pip.conf.j2
+    dest: "{{ pip_conf_dir }}/pip.conf"
+  when: pip_index_url is defined
+
+- name: Download pip package manager
   become: yes
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
