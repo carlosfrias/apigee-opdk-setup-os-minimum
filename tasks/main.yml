@@ -91,7 +91,6 @@
   - nss
   - openssh-clients
   - openssh-server
-  - sudo
   - grep
   - rpm
   - rng-tools
