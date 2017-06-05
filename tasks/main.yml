@@ -133,10 +133,12 @@
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
     dest: /tmp/get-pip.py
+  tags: ['pip-manager']
 
 - name: Install pip package manager
   become: yes
   shell: python /tmp/get-pip.py
+  tags: ['pip-manager']
 
 - name: Update python packages
   become: yes
