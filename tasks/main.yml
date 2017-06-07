@@ -142,15 +142,17 @@
 
 - name: Download pip package manager
   become: yes
+  tags: ['pip-manager']
   get_url:
     url: https://bootstrap.pypa.io/get-pip.py
     dest: /tmp/get-pip.py
-  tags: ['pip-manager']
+  when: pip_conf_dir is not defined
 
 - name: Install pip package manager
   become: yes
-  shell: python /tmp/get-pip.py
   tags: ['pip-manager']
+  shell: python /tmp/get-pip.py
+  when: pip_conf_dir is not defined
 
 - name: Update python packages
   become: yes
