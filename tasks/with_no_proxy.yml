@@ -1,5 +1,4 @@
 ---
----
 # tasks file for apigee-opdk-setup-os
 - name: Configure AWS AMI OS package manager repositories for Apigee
   shell: "yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional"
