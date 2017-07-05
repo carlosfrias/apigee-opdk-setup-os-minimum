@@ -2,6 +2,7 @@
 # tasks file for apigee-opdk-setup-os
 
 - name: Do not use proxy definitions
+  become_flags: beroot
   include: with_no_proxy.yml
   when: http_proxy is not defined and https_proxy is not defined
 
