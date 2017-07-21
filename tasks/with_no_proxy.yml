@@ -87,9 +87,4 @@
   pip:
     name: '{{ item }}'
     state: present
-  with_items:
-  - httplib2
-  - pexpect
-  - passlib
-  - requests
-  - kazoo
+  with_items: "{{ pip_packages }}
