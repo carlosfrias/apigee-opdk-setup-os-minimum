@@ -87,4 +87,4 @@
   pip:
     name: '{{ item }}'
     state: present
-  with_items: "{{ pip_packages }}
+  with_items: "{{ pip_packages }}"
