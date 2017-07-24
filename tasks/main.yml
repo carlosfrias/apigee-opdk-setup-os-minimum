@@ -17,7 +17,7 @@
      name: "{{ items.name }}"
      baseurl: "{{ items.baseurl }}"
      file: 'redhat'
-  with_items: "{{ yum_repositories }}"
+  with_items: "{{ vz_aws_rhel7_repositories }}"
 
 - name: Yum clean
   become: yes
