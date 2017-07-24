@@ -14,8 +14,8 @@
   yum_repository:
      enabled: yes
      state: present
-     name: "{{ items.name }}"
-     baseurl: "{{ items.baseurl }}"
+     name: "{{ item.name }}"
+     baseurl: "{{ item.baseurl }}"
      file: 'redhat'
   with_items: "{{ vz_aws_rhel7_repositories }}"
 
