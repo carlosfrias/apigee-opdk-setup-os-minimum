@@ -15,6 +15,7 @@
      enabled: yes
      state: present
      name: "{{ item.name }}"
+     description: "{{ item.name }}"
      baseurl: "{{ item.baseurl }}"
      file: 'redhat'
   with_items: "{{ vz_aws_rhel7_repositories }}"
