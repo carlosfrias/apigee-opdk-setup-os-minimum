@@ -24,3 +24,26 @@ pip_packages:
 - passlib
 - requests
 - kazoo
+
+yum_repositories:
+- { name: rhel-7-server-extras-rpms,
+    baseurl: "https://luxfavlpa001.verizon.com/pulp/repos/Verizon/1m0w-1w/RHEL7_SOE/content/dist/rhel/server/7/7Server/$basearch/extras/os"
+  }
+- { name: rhel-7-server-optional-rpms,
+    baseurl: "https://luxfavlpa001.verizon.com/pulp/repos/Verizon/1m0w-1w/RHEL7_SOE/content/dist/rhel/server/7/7Server/$basearch/optional/os"
+  }
+- { name: rhel-7-server-rpms,
+    baseurl: "https://luxfavlpa001.verizon.com/pulp/repos/Verizon/1m0w-1w/RHEL7_SOE/content/dist/rhel/server/7/7Server/$basearch/os"
+  }
+- { name: rhel-7-server-satellite-tools-6.2-rpms,
+    baseurl: "https://luxfavlpa001.verizon.com/pulp/repos/Verizon/1m0w-1w/RHEL7_SOE/content/dist/rhel/server/7/7Server/$basearch/rhscl/1/os"
+  }
+- { name: rhel-server-rhscl-7-rpms,
+    baseurl: "https://luxfavlpa001.verizon.com/pulp/repos/Verizon/1m0w-1w/RHEL7_SOE/content/dist/rhel/server/7/7Server/$basearch/rhscl/1/os"
+  }
+- { name: rhel-7-server-rhn-tools-rpms,
+    baseurl: "https://luxfavlpa001.verizon.com/pulp/repos/Verizon/1m0w-1w/RHEL7_SOE/content/dist/rhel/server/7/7Server/$basearch/rhn-tools/os"
+  }
+- { name: rhel-7-server-thirdparty-oracle-java-rpms,
+    baseurl: " https://luxfavlpa001.verizon.com/pulp/repos/Verizon/1m0w-1w/RHEL7_SOE/content/dist/rhel/server/7/7Server/$basearch/oracle-java/os"
+  }

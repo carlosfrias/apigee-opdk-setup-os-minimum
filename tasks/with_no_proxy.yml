@@ -56,18 +56,6 @@
     line: 'export CONTINUE_ON_WARNING={{ apigee_continue_on_warning }}'
     backup: yes
 
-- name: Create pip config folder
-  file:
-    path: "{{ pip_conf_dir }}"
-    state: directory
-  when: pip_conf_dir is defined
-
-- name: Configure pip
-  template:
-    src: pip.conf.j2
-    dest: "{{ pip_conf_dir }}/pip.conf"
-  when: pip_conf_dir is defined and pip_index_url is defined
-
 - name: Download pip package manager
   become: yes
   tags: ['pip-manager']
