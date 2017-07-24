@@ -17,7 +17,7 @@
      name: "{{ item.repo_id }}"
      description: "{{ item.name }}"
      baseurl: "{{ item.baseurl }}"
-     file: 'redhat'
+     file: 'vz-aws-rhel7'
   with_items: "{{ vz_aws_rhel7_repositories }}"
 
 - name: Yum clean
