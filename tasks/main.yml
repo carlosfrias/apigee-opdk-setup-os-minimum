@@ -14,7 +14,7 @@
   yum_repository:
      enabled: yes
      state: present
-     name: "{{ item.name }}"
+     name: "{{ item.repo_id }}"
      description: "{{ item.name }}"
      baseurl: "{{ item.baseurl }}"
      file: 'redhat'

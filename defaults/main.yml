@@ -50,16 +50,23 @@ redhat_repositories:
 
 vz_aws_rhel7_repositories:
 - { name: "Red Hat Enterprise Linux 7 Server (RPMs)",
-    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-rpms/Packages" }
+    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-rpms/Packages",
+    repo_id: "rhel-7-server-rpms"}
 - { name: "Red Hat Software Collections RPMs for Red Hat Enterprise Linux 7 Server",
-    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-server-rhscl-7-rpms/Packages" }
+    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-server-rhscl-7-rpms/Packages",
+    repo_id: "rhel-server-rhscl-7-rpms"}
 - { name: "Red Hat Satellite Tools 6.2 (for RHEL 7 Server) (RPMs)",
-    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-satellite-tools-6.2-rpms/Packages" }
+    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-satellite-tools-6.2-rpms/Packages",
+    repo_id: "rhel-7-server-satellite-tools-6.2-rpms"}
 - { name: "Red Hat Enterprise Linux 7 Server - Supplementary (RPMs)",
-    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-supplementary-rpms/Packages" }
+    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-supplementary-rpms/Packages",
+    repo_id: "rhel-7-server-supplementary-rpms"}
 - { name: "Red Hat Enterprise Linux 7 Server - RH Common (RPMs)",
-    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-rh-common-rpms/Packages" }
+    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-rh-common-rpms/Packages",
+    repo_id: "rhel-7-server-rh-common-rpms"}
 - { name: "Red Hat Enterprise Linux 7 Server - Extras (RPMs)",
-    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-extras-rpms/Packages" }
+    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-extras-rpms/Packages",
+    repo_id: "rhel-7-server-extras-rpms"}
 - { name: "Red Hat Enterprise Linux 7 Server - Optional (RPMs)",
-    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-optional-rpms/Packages" }
+    baseurl: "http://luxsc1lna001.itcent.ebiz.verizon.com/rhel7/rhel-7-server-optional-rpms/Packages",
+    repo_id: "rhel-7-server-optional-rpms" }
