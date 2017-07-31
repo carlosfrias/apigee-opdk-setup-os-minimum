@@ -34,6 +34,12 @@
   include: with_proxy.yml
   when: http_proxy is defined and https_proxy is defined
 
+- name: Update pip
+  become: yes
+  pip:
+    name: pip
+    state: latest
+
 - name: Update python packages
   become: yes
   pip:
