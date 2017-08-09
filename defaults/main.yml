@@ -24,3 +24,25 @@ pip_packages:
 - passlib
 - requests
 - kazoo
+
+yum_os_minimum_packages:
+- bind-utils
+- chkconfig
+- curl
+- tar
+- wget
+- yum-utils
+- unzip
+- rsync
+- which
+- libselinux-python
+- nss
+- openssh-clients
+- openssh-server
+- grep
+- rpm
+- rng-tools
+- sed
+- unzip
+- openldap-servers
+
