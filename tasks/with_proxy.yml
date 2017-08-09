@@ -7,7 +7,7 @@
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
     no_proxy: "{{ no_proxy }}"
-  when: epel_repo is not defined and epel_repo | trim != ''
+#  when: epel_repo is not defined and epel_repo | trim != ''
 
 #- name: Update EPEL from custom location with proxy
 #  yum:
@@ -19,7 +19,7 @@
 #    no_proxy: "{{ no_proxy }}"
 #  when: epel_repo is defined and epel_repo | trim != ''
 
-- name: Yum update
+- name: Yum update with proxy
   yum:
     name: '*'
     state: latest
