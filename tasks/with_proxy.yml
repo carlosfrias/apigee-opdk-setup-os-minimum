@@ -19,6 +19,16 @@
 #    no_proxy: "{{ no_proxy }}"
 #  when: epel_repo is defined and epel_repo | trim != ''
 
+- name: Yum update
+  yum:
+    name: '*'
+    state: latest
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
+
+
 - name: Update basic yum os packages
   become: yes
   yum:

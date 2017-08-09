@@ -14,11 +14,6 @@
   become: yes
   shell: "yum clean all"
 
-- name: Yum update
-  yum:
-    name: '*'
-    state: latest
-
 - name: Create pip config folder
   file:
     path: "{{ pip_conf_dir }}"
