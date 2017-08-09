@@ -28,7 +28,7 @@
     https_proxy: "{{ https_proxy }}"
     no_proxy: "{{ no_proxy }}"
 
-- name: Update basic yum os packages
+- name: Update basic yum os packages with proxy
   become: yes
   yum:
     name: "{{ item }}"
@@ -37,37 +37,6 @@
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
-
-- name: Start rngd service
-  service:
-    name: rngd
-    enabled: yes
-    state: started
-
-- name: Update vm.swappiness
-  become: yes
-  sysctl:
-    name: vm.swappiness
-    value: '{{ vm_swappiness }}'
-    state: present
-
-- name: Disable Default IPV6
-  become: yes
-  shell: "sysctl -w net.ipv6.conf.default.disable_ipv6=1"
-  tags: ['ipv6']
-
-- name: Disable All IPV6
-  become: yes
-  shell: "sysctl -w net.ipv6.conf.all.disable_ipv6=1"
-  tags: ['ipv6']
-
-- name: Update for apigee installation environment
-  become: yes
-  lineinfile:
-    dest: /etc/environment
-    regexp: "^export CONTINUE_ON_WARNING="
-    line: 'export CONTINUE_ON_WARNING={{ apigee_continue_on_warning }}'
-    backup: yes
 
 - name: Download pip package manager
   become: yes

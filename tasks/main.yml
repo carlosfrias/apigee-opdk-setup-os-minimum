@@ -34,6 +34,43 @@
   include: with_proxy.yml
   when: http_proxy is defined and https_proxy is defined
 
+- name: Start rngd service with no proxy
+  service:
+    name: rngd
+    enabled: yes
+    state: started
+
+- name: Update vm.swappiness with no proxy
+  become: yes
+  sysctl:
+    name: vm.swappiness
+    value: '{{ vm_swappiness }}'
+    state: present
+
+- name: Disable Default IPV6 with no proxy
+  become: yes
+  sysctl:
+    name: net.ipv6.conf.default.disable_ipv6
+    value: 1
+    sysctl_set: yes
+  tags: ['ipv6']
+
+- name: Disable All IPV6 with no proxy
+  become: yes
+  sysctl:
+    name: net.ipv6.conf.all.disable_ipv6
+    value: 1
+    sysctl_set: yes
+  tags: ['ipv6']
+
+- name: Update for apigee installation environment with no proxy
+  become: yes
+  lineinfile:
+    dest: /etc/environment
+    regexp: "^export CONTINUE_ON_WARNING="
+    line: 'export CONTINUE_ON_WARNING={{ apigee_continue_on_warning }}'
+    backup: yes
+
 - name: Update pip
   become: yes
   pip:

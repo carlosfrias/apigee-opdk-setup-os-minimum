@@ -1,9 +1,9 @@
 ---
 # tasks file for apigee-opdk-setup-os
-- name: Update EPEL with no proxy
-  yum:
-    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
-    state: present
+#- name: Update EPEL with no proxy
+#  yum:
+#    name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
+#    state: present
 #  when: epel_repo is not defined and epel_repo | trim != ''
 
 - name: Yum update with no proxy
@@ -17,45 +17,14 @@
 #    state: present
 #  when: epel_repo is defined and epel_repo | trim != ''
 
-- name: Update basic yum os packages
+- name: Update basic yum os packages with no proxy
   become: yes
   yum:
     name: "{{ item }}"
     state: present
   with_items: "{{ yum_os_minimum_packages }}"
 
-- name: Start rngd service
-  service:
-    name: rngd
-    enabled: yes
-    state: started
-
-- name: Update vm.swappiness
-  become: yes
-  sysctl:
-    name: vm.swappiness
-    value: '{{ vm_swappiness }}'
-    state: present
-
-- name: Disable Default IPV6
-  become: yes
-  shell: "sysctl -w net.ipv6.conf.default.disable_ipv6=1"
-  tags: ['ipv6']
-
-- name: Disable All IPV6
-  become: yes
-  shell: "sysctl -w net.ipv6.conf.all.disable_ipv6=1"
-  tags: ['ipv6']
-
-- name: Update for apigee installation environment
-  become: yes
-  lineinfile:
-    dest: /etc/environment
-    regexp: "^export CONTINUE_ON_WARNING="
-    line: 'export CONTINUE_ON_WARNING={{ apigee_continue_on_warning }}'
-    backup: yes
-
-- name: Download pip package manager
+- name: Download pip package manager with no proxy
   become: yes
   tags: ['pip-manager']
   get_url:
@@ -63,13 +32,13 @@
     dest: /tmp/get-pip.py
   when: pip_conf_dir is not defined
 
-- name: Install pip package manager
+- name: Install pip package manager with no proxy
   become: yes
   tags: ['pip-manager']
   shell: python /tmp/get-pip.py
   when: pip_conf_dir is not defined
 
-- name: Update python packages
+- name: Update python packages with no proxy
   become: yes
   pip:
     name: '{{ item }}'
