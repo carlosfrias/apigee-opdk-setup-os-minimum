@@ -28,7 +28,6 @@
     https_proxy: "{{ https_proxy }}"
     no_proxy: "{{ no_proxy }}"
 
-
 - name: Update basic yum os packages
   become: yes
   yum:
