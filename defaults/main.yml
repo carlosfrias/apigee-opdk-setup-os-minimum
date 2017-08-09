@@ -44,5 +44,5 @@ yum_os_minimum_packages:
 - rng-tools
 - sed
 - unzip
-
+- openldap-servers
 
