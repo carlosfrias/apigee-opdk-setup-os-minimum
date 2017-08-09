@@ -1,5 +1,4 @@
 ---
-
 - name: Update EPEL with proxy
   yum:
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
@@ -8,6 +7,17 @@
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
     no_proxy: "{{ no_proxy }}"
+  when: epel_repo is not defined and epel_repo | trim != ''
+
+#- name: Update EPEL from custom location with proxy
+#  yum:
+#    name: "{{ epel_repo }}"
+#    state: present
+#  environment:
+#    http_proxy: "{{ http_proxy }}"
+#    https_proxy: "{{ https_proxy }}"
+#    no_proxy: "{{ no_proxy }}"
+#  when: epel_repo is defined and epel_repo | trim != ''
 
 - name: Update basic yum os packages
   become: yes

@@ -4,7 +4,13 @@
   yum:
     name: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ ansible_distribution_major_version }}.noarch.rpm"
     state: present
+  when: epel_repo is not defined and epel_repo | trim != ''
 
+#- name: Update EPEL from custom location with no proxy
+#  yum:
+#    name: "{{ epel_repo }}"
+#    state: present
+#  when: epel_repo is defined and epel_repo | trim != ''
 
 - name: Update basic yum os packages
   become: yes
