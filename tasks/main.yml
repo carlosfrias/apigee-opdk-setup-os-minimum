@@ -60,16 +60,3 @@
     regexp: "^export CONTINUE_ON_WARNING="
     line: 'export CONTINUE_ON_WARNING={{ apigee_continue_on_warning }}'
     backup: yes
-
-- name: Update pip
-  become: yes
-  pip:
-    name: pip
-    state: latest
-
-- name: Update python packages
-  become: yes
-  pip:
-    name: '{{ item }}'
-    state: present
-  with_items: "{{ pip_packages }}"

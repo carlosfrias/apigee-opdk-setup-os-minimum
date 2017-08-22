@@ -26,6 +26,12 @@
   shell: python /tmp/get-pip.py
   when: pip_conf_dir is not defined
 
+- name: Update pip
+  become: yes
+  pip:
+    name: pip
+    state: latest
+
 - name: Update python packages with no proxy
   become: yes
   pip:
