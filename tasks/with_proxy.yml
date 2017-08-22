@@ -37,6 +37,7 @@
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
 
 - name: Download pip package manager
   become: yes
@@ -48,6 +49,7 @@
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
 
 - name: Install pip package manager
   become: yes
@@ -57,4 +59,5 @@
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
 
