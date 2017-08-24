@@ -24,20 +24,30 @@
   include: with_proxy.yml
   when: (https_proxy is defined or https_proxy | trim != '') and (http_proxy is defined or http_proxy | trim != '') and (no_proxy is defined or no_proxy | trim == '')
 
-- name: Start rngd service with no proxy
+- name: Update System Entropy Settings
+  lineinfile:
+    backrefs: yes
+    path: /usr/lib/systemd/system/rngd.service
+    regexp: '^(ExecStart=/sbin/rngd -f)'
+    line: '\1 -r /dev/urandom'
+
+- name: Daemon Reload
+  shell: /usr/bin/systemctl daemon-reload
+
+- name: Start rngd service
   service:
     name: rngd
     enabled: yes
-    state: started
+    state: restarted
 
-- name: Update vm.swappiness with no proxy
+- name: Update vm.swappiness
   become: yes
   sysctl:
     name: vm.swappiness
     value: '{{ vm_swappiness }}'
     state: present
 
-- name: Disable Default IPV6 with no proxy
+- name: Disable Default IPV6
   become: yes
   sysctl:
     name: net.ipv6.conf.default.disable_ipv6
@@ -45,7 +55,7 @@
     sysctl_set: yes
   tags: ['ipv6']
 
-- name: Disable All IPV6 with no proxy
+- name: Disable All IPV6
   become: yes
   sysctl:
     name: net.ipv6.conf.all.disable_ipv6
