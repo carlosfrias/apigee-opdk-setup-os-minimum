@@ -40,6 +40,13 @@
   include: with_proxy.yml
   when: http_proxy is defined and https_proxy is defined
 
+- name: Update System Entropy Settings
+  lineinfile:
+    backrefs: yes
+    path: /usr/lib/systemd/system/rngd.service
+    regexp: '^(ExecStart=/sbin/rngd -f)'
+    line: '\1 -r /dev/urandom'
+
 - name: Start rngd service
   service:
     name: rngd
