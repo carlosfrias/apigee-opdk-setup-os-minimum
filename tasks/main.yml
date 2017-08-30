@@ -40,18 +40,30 @@
   include: with_proxy.yml
   when: http_proxy is defined and https_proxy is defined
 
-- name: Update System Entropy Settings
-  lineinfile:
-    backrefs: yes
-    path: /usr/lib/systemd/system/rngd.service
-    regexp: '^(ExecStart=/sbin/rngd -f)'
-    line: '\1 -r /dev/urandom'
+- name: Patch rngd service unit
+  replace:
+    dest: /usr/lib/systemd/system/rngd.service
+    regexp: ^(ExecStart=/sbin/rngd -f)$
+    replace: \1 -r /dev/urandom
+  register: rngd_unit
 
-- name: Start rngd service
+- name: Reload systemd
+  command: systemctl daemon-reload
+  when: rngd_unit.changed
+
+- name: Restart and enable rngd
   service:
     name: rngd
+    state: restarted
     enabled: yes
+  when: rngd_unit.changed
+
+- name: Start and enable rngd
+  service:
+    name: rngd
     state: started
+    enabled: yes
+  when: not rngd_unit.changed
 
 - name: Update vm.swappiness
   become: yes
