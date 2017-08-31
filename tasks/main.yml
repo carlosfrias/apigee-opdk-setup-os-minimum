@@ -41,11 +41,10 @@
   when: http_proxy is defined and https_proxy is defined
 
 - name: Patch rngd service unit
-  lineinfile:
-    backrefs: yes
-    path: /usr/lib/systemd/system/rngd.service
+  replace:
+    dest: /usr/lib/systemd/system/rngd.service
     regexp: ^(ExecStart=/sbin/rngd -f)$
-    line: \1 -r /dev/urandom
+    replace: \1 -r /dev/urandom
   register: rngd_unit
 
 - name: Reload systemd
