@@ -42,9 +42,10 @@
 
 - name: Patch rngd service unit
   lineinfile:
-    dest: /usr/lib/systemd/system/rngd.service
+    backrefs: yes
+    path: /usr/lib/systemd/system/rngd.service
     regexp: ^(ExecStart=/sbin/rngd -f)$
-    replace: \1 -r /dev/urandom
+    line: \1 -r /dev/urandom
   register: rngd_unit
 
 - name: Reload systemd
