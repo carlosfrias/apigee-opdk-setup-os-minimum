@@ -41,7 +41,7 @@
   when: http_proxy is defined and https_proxy is defined
 
 - name: Patch rngd service unit
-  replace:
+  lineinfile:
     dest: /usr/lib/systemd/system/rngd.service
     regexp: ^(ExecStart=/sbin/rngd -f)$
     replace: \1 -r /dev/urandom
