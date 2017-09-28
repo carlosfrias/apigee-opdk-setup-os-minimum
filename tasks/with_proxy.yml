@@ -13,7 +13,6 @@
   yum:
     name: "{{ item }}"
     state: present
-    allow_downgrade: yes
   with_items: "{{ yum_packages }}"
   environment:
     http_proxy: "{{ http_proxy }}"
