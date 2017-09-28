@@ -34,6 +34,11 @@ yum_packages:
 - rng-tools
 - sed
 - unzip
+- openldap
+- openldap-clients
+- openldap-servers
+
+opendldap_packages_2_4_40:
 - openldap-2.4.40
 - openldap-clients-2.4.40
 - openldap-servers-2.4.40
