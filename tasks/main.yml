@@ -1,9 +1,9 @@
 ---
 # tasks file for apigee-opdk-setup-os
 
-#- name: Configure AWS AMI OS package manager repositories for Apigee
-#  shell: "yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional"
-#  when: ansible_bios_version | lower | search('amazon') and ansible_os_family | lower == 'redhat' and ansible_distribution_major_version | version_compare('6', '>')
+- name: Configure AWS AMI OS package manager repositories for Apigee
+  shell: "yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional"
+  when: ansible_bios_version | lower | search('amazon') and ansible_os_family | lower == 'redhat' and ansible_distribution_major_version | version_compare('6', '>')
 
 # TODO: Look up the ansible_distribution name for RHEL systems
 #- name: If using RHEL then register RHEL on RHN
@@ -12,7 +12,13 @@
 
 - name: Yum clean
   become: yes
-  shell: "yum clean all"
+  shell: yum clean all
+
+- name: Remove IPv6 localhost entry
+  replace:
+    dest: /etc/hosts
+    regexp: '::1.*(localhost6.*)$'
+    replace: '::1         \1'
 
 - name: Create pip config folder
   file:
@@ -34,9 +40,52 @@
   include: with_proxy.yml
   when: http_proxy is defined and https_proxy is defined
 
-- name: Update python packages
+- name: Patch rngd service unit
+  replace:
+    dest: /usr/lib/systemd/system/rngd.service
+    regexp: ^(ExecStart=/sbin/rngd -f)$
+    replace: \1 -r /dev/urandom
+  register: rngd_unit
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  when: rngd_unit.changed
+
+- name: Restart and enable rngd
+  service:
+    name: rngd
+    state: restarted
+    enabled: yes
+  when: rngd_unit.changed
+
+- name: Start and enable rngd
+  service:
+    name: rngd
+    state: started
+    enabled: yes
+  when: not rngd_unit.changed
+
+- name: Update vm.swappiness
   become: yes
-  pip:
-    name: '{{ item }}'
+  sysctl:
+    name: vm.swappiness
+    value: '{{ vm_swappiness }}'
     state: present
-  with_items: "{{ pip_packages }}"
+
+- name: Disable Default IPV6
+  become: yes
+  shell: "sysctl -w net.ipv6.conf.default.disable_ipv6=1"
+  tags: ['ipv6']
+
+- name: Disable All IPV6
+  become: yes
+  shell: "sysctl -w net.ipv6.conf.all.disable_ipv6=1"
+  tags: ['ipv6']
+
+- name: Update for apigee installation environment
+  become: yes
+  lineinfile:
+    dest: /etc/environment
+    regexp: "^export CONTINUE_ON_WARNING="
+    line: 'export CONTINUE_ON_WARNING={{ apigee_continue_on_warning }}'
+    backup: yes

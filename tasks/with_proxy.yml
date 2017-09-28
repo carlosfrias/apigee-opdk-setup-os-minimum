@@ -1,4 +1,12 @@
 ---
+- name: Yum update with proxy
+  yum:
+    name: '*'
+    state: latest
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
 
 - name: Update basic yum os packages with proxy
   become: yes
@@ -9,6 +17,7 @@
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
 
 - name: Start rngd service
   service:
@@ -51,6 +60,7 @@
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
 
 - name: Install pip package manager with proxy
   become: yes
@@ -60,3 +70,25 @@
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
+
+- name: Update pip
+  become: yes
+  pip:
+    name: pip
+    state: latest
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
+
+- name: Update python packages with no proxy
+  become: yes
+  pip:
+    name: '{{ item }}'
+    state: present
+  with_items: "{{ pip_packages }}"
+  environment:
+    http_proxy: "{{ http_proxy }}"
+    https_proxy: "{{ https_proxy }}"
+    no_proxy: "{{ no_proxy }}"
