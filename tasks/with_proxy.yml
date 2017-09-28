@@ -1,29 +1,11 @@
 ---
 
-- name: Update basic yum os packages
+- name: Update basic yum os packages with proxy
   become: yes
   yum:
     name: "{{ item }}"
     state: present
-  with_items:
-  - bind-utils
-  - chkconfig
-  - curl
-  - tar
-  - wget
-  - yum-utils
-  - unzip
-  - rsync
-  - which
-  - libselinux-python
-  - nss
-  - openssh-clients
-  - openssh-server
-  - grep
-  - rpm
-  - rng-tools
-  - sed
-  - unzip
+  with_items: "{{ yum_packages }}"
   environment:
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
@@ -59,7 +41,7 @@
     line: 'export CONTINUE_ON_WARNING={{ apigee_continue_on_warning }}'
     backup: yes
 
-- name: Download pip package manager
+- name: Download pip package manager with proxy
   become: yes
   tags: ['pip-manager']
   get_url:
@@ -70,7 +52,7 @@
     http_proxy: "{{ http_proxy }}"
     https_proxy: "{{ https_proxy }}"
 
-- name: Install pip package manager
+- name: Install pip package manager with proxy
   become: yes
   tags: ['pip-manager']
   shell: python /tmp/get-pip.py
