@@ -14,12 +14,6 @@
   become: yes
   shell: yum clean all
 
-- name: Remove IPv6 localhost entry
-  replace:
-    dest: /etc/hosts
-    regexp: '::1.*(localhost6.*)$'
-    replace: '::1         \1'
-
 - name: Create pip config folder
   file:
     path: "{{ pip_conf_dir }}"
@@ -39,6 +33,12 @@
 - name: Use proxy definitions
   include: with_proxy.yml
   when: http_proxy is defined and https_proxy is defined
+
+- name: Remove IPv6 localhost entry
+  replace:
+    dest: /etc/hosts
+    regexp: '::1.*(localhost6.*)$'
+    replace: '::1         \1'
 
 - name: Patch rngd service unit
   replace:
