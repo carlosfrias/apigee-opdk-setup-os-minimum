@@ -40,30 +40,38 @@
     regexp: '::1.*(localhost6.*)$'
     replace: '::1         \1'
 
-- name: Patch rngd service unit
-  replace:
-    dest: /usr/lib/systemd/system/rngd.service
-    regexp: ^(ExecStart=/sbin/rngd -f)$
-    replace: \1 -r /dev/urandom
-  register: rngd_unit
+- block:
+  - name: Start rngd service
+    service:
+      name: rngd
+      enabled: yes
+      state: started
 
-- name: Reload systemd
-  command: systemctl daemon-reload
-  when: rngd_unit.changed
+  - name: Patch rngd service unit
+    replace:
+      dest: /usr/lib/systemd/system/rngd.service
+      regexp: ^(ExecStart=/sbin/rngd -f)$
+      replace: \1 -r /dev/urandom
+    register: rngd_unit
 
-- name: Restart and enable rngd
-  service:
-    name: rngd
-    state: restarted
-    enabled: yes
-  when: rngd_unit.changed
+  - name: Reload systemd
+    command: systemctl daemon-reload
+    when: rngd_unit.changed
 
-- name: Start and enable rngd
-  service:
-    name: rngd
-    state: started
-    enabled: yes
-  when: not rngd_unit.changed
+  - name: Restart and enable rngd
+    service:
+      name: rngd
+      state: restarted
+      enabled: yes
+    when: rngd_unit.changed
+
+  - name: Start and enable rngd
+    service:
+      name: rngd
+      state: started
+      enabled: yes
+    when: not rngd_unit.changed
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version | version_compare("6", ">")
 
 - name: Update vm.swappiness
   become: yes
