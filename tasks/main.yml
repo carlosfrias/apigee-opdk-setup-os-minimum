@@ -1,19 +1,5 @@
 ---
 # tasks file for apigee-opdk-setup-os
-
-- name: Configure AWS AMI OS package manager repositories for Apigee
-  shell: "yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional"
-  when: ansible_bios_version | lower | search('amazon') and ansible_os_family | lower == 'redhat' and ansible_distribution_major_version | version_compare('6', '>')
-
-# TODO: Look up the ansible_distribution name for RHEL systems
-#- name: If using RHEL then register RHEL on RHN
-#  shell: "subscription-manager register --username={{ rhel_user_name }} --password={{ rhel_password }} --auto-attach"
-#  when: ansible_bios_version | lower | search('amazon') and ansible_os_family | lower == 'redhat' and ansible_distribution_major_version | version_compare('7', '>')
-
-- name: Yum clean
-  become: yes
-  shell: yum clean all
-
 - name: Create pip config folder
   file:
     path: "{{ pip_conf_dir }}"
