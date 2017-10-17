@@ -33,5 +33,4 @@ yum_packages:
 - rpm
 - rng-tools
 - sed
-- unzip
 
