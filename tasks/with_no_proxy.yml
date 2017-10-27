@@ -17,31 +17,3 @@
   shell: "sysctl -w net.ipv6.conf.all.disable_ipv6=1"
   tags: ['ipv6']
 
-- name: Download pip package manager
-  become: yes
-  tags: ['pip-manager']
-  get_url:
-    url: https://bootstrap.pypa.io/get-pip.py
-    dest: /tmp/get-pip.py
-  when: pip_conf_dir is not defined
-
-- name: Install pip package manager
-  become: yes
-  tags: ['pip-manager']
-  shell: python /tmp/get-pip.py
-  when: pip_conf_dir is not defined
-
-- name: Update pip
-  tags: ['pip']
-  become: yes
-  pip:
-    name: pip
-    state: latest
-
-- name: Update python packages
-  tags: ['pip']
-  become: yes
-  pip:
-    name: '{{ item }}'
-    state: present
-  with_items: "{{ pip_packages }}"
