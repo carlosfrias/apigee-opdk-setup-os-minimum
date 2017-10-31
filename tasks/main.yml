@@ -9,6 +9,7 @@
   when: http_proxy is defined and https_proxy is defined
 
 - name: Remove IPv6 localhost entry
+  become: yes
   replace:
     dest: /etc/hosts
     regexp: '::1.*(localhost6.*)$'
@@ -45,6 +46,7 @@
       state: started
       enabled: yes
     when: not rngd_unit.changed
+  become: yes
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version | version_compare("6", ">")
 
 - name: Update vm.swappiness
