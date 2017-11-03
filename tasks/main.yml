@@ -12,8 +12,8 @@
   become: yes
   replace:
     dest: /etc/hosts
-    regexp: '::1.*(localhost6.*)$'
-    replace: '::1         \1'
+    regexp: '(^::1.*localhost6.*)$'
+    replace: '# \1'
 
 - block:
   - name: Start rngd service
