@@ -56,16 +56,6 @@
     value: '{{ vm_swappiness }}'
     state: present
 
-#- name: Disable Default IPV6
-#  become: yes
-#  shell: "sysctl -w net.ipv6.conf.default.disable_ipv6=1"
-#  tags: ['ipv6']
-
-#- name: Disable All IPV6
-#  become: yes
-#  shell: "sysctl -w net.ipv6.conf.all.disable_ipv6=1"
-#  tags: ['ipv6']
-
 - name: Disable All IPV6
   tags: ['ipv6']
   sysctl:
