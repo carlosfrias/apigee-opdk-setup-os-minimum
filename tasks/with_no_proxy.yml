@@ -1,19 +1,9 @@
 ---
 # tasks file for apigee-opdk-setup-os
+# TODO Use apigee-opdk-yum-packages instead of doing it directly here
 - name: Update basic yum os packages
   become: yes
   yum:
     name: "{{ item }}"
     state: present
   with_items: "{{ yum_packages }}"
-
-- name: Disable Default IPV6
-  become: yes
-  shell: "/sbin/sysctl -w net.ipv6.conf.default.disable_ipv6=1"
-  tags: ['ipv6']
-
-- name: Disable All IPV6
-  become: yes
-  shell: "/sbin/sysctl -w net.ipv6.conf.all.disable_ipv6=1"
-  tags: ['ipv6']
-
