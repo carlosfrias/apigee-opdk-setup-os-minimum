@@ -2,7 +2,7 @@
 # tasks file for apigee-opdk-setup-os
 - name: Update basic yum os packages
   import_role:
-    name: apigee-opdk-setup-os-epel
+    name: apigee-opdk-setup-yum-packages
   vars:
     yum_os_minimum_packages: "{{ yum_packages }}"
 
