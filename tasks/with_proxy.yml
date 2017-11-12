@@ -1,13 +1,4 @@
 ---
-- name: Yum update with proxy
-  yum:
-    name: '*'
-    state: latest
-  environment:
-    http_proxy: "{{ http_proxy }}"
-    https_proxy: "{{ https_proxy }}"
-    no_proxy: "{{ no_proxy }}"
-
 - name: Update basic yum os packages with proxy
   become: yes
   yum:
