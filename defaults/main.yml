@@ -8,22 +8,22 @@ vm_swappiness: 60
 qpid_client: ftp://fr2.rpmfind.net/linux/epel/7/x86_64/q/qpid-cpp-client-1.35.0-3.el7.x86_64.rpm
 qpid_server: ftp://fr2.rpmfind.net/linux/epel/7/x86_64/q/qpid-cpp-server-1.35.0-3.el7.x86_64.rpm
 
-yum_packages:
-- bind-utils
-- chkconfig
-- curl
-- tar
-- wget
-- yum-utils
-- unzip
-- rsync
-- which
-- libselinux-python
-- nss
-- openssh-clients
-- openssh-server
-- grep
-- rpm
-- rng-tools
-- sed
+#yum_packages:
+#- bind-utils
+#- chkconfig
+#- curl
+#- tar
+#- wget
+#- yum-utils
+#- unzip
+#- rsync
+#- which
+#- libselinux-python
+#- nss
+#- openssh-clients
+#- openssh-server
+#- grep
+#- rpm
+#- rng-tools
+#- sed
 
