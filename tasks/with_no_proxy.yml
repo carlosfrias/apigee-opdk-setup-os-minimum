@@ -1,9 +1,0 @@
----
-# tasks file for apigee-opdk-setup-os
-# TODO Use apigee-opdk-yum-packages instead of doing it directly here
-- name: Update basic yum os packages
-  become: yes
-  yum:
-    name: "{{ item }}"
-    state: present
-  with_items: "{{ yum_packages }}"

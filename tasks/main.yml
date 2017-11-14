@@ -6,14 +6,6 @@
   vars:
     yum_os_minimum_packages: "{{ yum_packages }}"
 
-#- name: Do not use proxy definitions
-#  include: with_no_proxy.yml
-#  when: http_proxy is not defined and https_proxy is not defined
-#
-#- name: Use proxy definitions
-#  include: with_proxy.yml
-#  when: http_proxy is defined and https_proxy is defined
-
 - name: Remove IPv6 localhost entry
   become: yes
   replace:
