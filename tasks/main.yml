@@ -47,24 +47,18 @@
   become: yes
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version | version_compare("6", ">")
 
-- name: Update vm.swappiness
-  become: yes
-  sysctl:
-    name: vm.swappiness
-    value: '{{ vm_swappiness }}'
-    state: present
-
-- name: Disable All IPV6
+- name: Update sysctl attributes
   become: yes
   tags: ['ipv6']
   sysctl:
-    name: "{{ item }}"
-    value: 1
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
     state: present
     sysctl_set: yes
   with_items:
-  - 'net.ipv6.conf.all.disable_ipv6'
-  - 'net.ipv6.conf.default.disable_ipv6'
+  - { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
+  - { name: 'net.ipv6.conf.default.disable_ipv6', value: '1' }
+  - { name: 'vm.swappiness', value: "{{ vm_swappiness }}" }
 
 - name: Update for apigee installation environment
   become: yes
