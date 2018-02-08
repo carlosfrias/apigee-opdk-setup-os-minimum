@@ -11,8 +11,9 @@
   tags: ['ipv6']
   replace:
     dest: /etc/hosts
-    regexp: '(^::1.*localhost6.*)$'
-    replace: '# \1'
+    regexp: "{{ item.regexp }}"
+    replace: '{{ item.replace }}'
+  with_items: "{{ clear_etc_hosts }}"
 
 - block:
   - name: Start rngd service
