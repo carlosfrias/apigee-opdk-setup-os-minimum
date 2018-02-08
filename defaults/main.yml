@@ -27,3 +27,5 @@ qpid_server: ftp://fr2.rpmfind.net/linux/epel/7/x86_64/q/qpid-cpp-server-1.35.0-
 #- rng-tools
 #- sed
 
+clear_etc_hosts:
+- { regexp: '(^::1.*localhost6.*)$', replace: "# \1" }
