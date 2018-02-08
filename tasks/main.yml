@@ -8,6 +8,7 @@
 
 - name: Remove IPv6 localhost entry
   become: yes
+  tags: ['ipv6']
   replace:
     dest: /etc/hosts
     regexp: '(^::1.*localhost6.*)$'
