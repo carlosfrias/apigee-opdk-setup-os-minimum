@@ -15,6 +15,16 @@
     replace: '{{ item.replace }}'
   with_items: "{{ clear_etc_hosts }}"
 
+- name: Update sysctl attributes for ipv6
+  tags: ['ipv6']
+  become: yes
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    sysctl_set: yes
+  with_items: "{{ sysctl_ipv6 }}"
+
 - block:
   - name: Start rngd service
     service:
