@@ -15,16 +15,6 @@
     replace: '{{ item.replace }}'
   with_items: "{{ clear_etc_hosts }}"
 
-- name: Update sysctl attributes for ipv6
-  tags: ['ipv6']
-  become: yes
-  sysctl:
-    name: "{{ item.name }}"
-    value: "{{ item.value }}"
-    state: present
-    sysctl_set: yes
-  with_items: "{{ sysctl_ipv6 }}"
-
 - block:
   - name: Start rngd service
     service:
@@ -58,15 +48,6 @@
     when: not rngd_unit.changed
   become: yes
   when: ansible_os_family == "RedHat" and ansible_distribution_major_version | version_compare("6", ">")
-
-- name: Update sysctl attributes
-  become: yes
-  sysctl:
-    name: "{{ item.name }}"
-    value: "{{ item.value }}"
-    state: present
-    sysctl_set: yes
-  with_items: "{{ sysctl_minimum }}"
 
 - name: Update for apigee installation environment
   become: yes
