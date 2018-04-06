@@ -9,9 +9,17 @@ Requirements
 
 The installation of Apigee OPDK requires root access as does the installation of the system updates that are the focus 
 of this role. Credentials must also be supplied to override the empty placeholders provided here. It is recommended that 
-credentials be consolidated into a single credentials.yml file that can be stored separately. It is assumed that files 
-containing credentials are stored in the ~/.apigee folder. 
+credentials be consolidated into a single credentials.yml file that can be stored separately. It is assumed that 
+credentials are stored in ~/.apigee-secure/credentials.yml. 
 
+# ipv6 Tag
+
+Please note that IPV6 is disabled in this role. If you need to by-pass this functionality because IPV6 is already being 
+disabled on a system then you can accomplish this by invoking the playbook with the --skip-tags flag like this:
+
+    ansible-playbook install-edge.yml --skip-tags=ipv6 
+    
+Additional information regarding how Ansible uses tags can be obtained [here](http://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html).     
 
 Role Variables
 --------------
