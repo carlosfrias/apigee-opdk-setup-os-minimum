@@ -16,21 +16,35 @@ containing credentials are stored in the ~/.apigee folder.
 Role Variables
 --------------
 
-Defaults for internal environment OPDK setup settings
-
-    apigee_continue_on_warning: y
-
-Default value to limit swap file use
-
-    vm_swappiness: 60
-
-Default epel repo for EL 6
-
-    epel_ol6: https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
-
-Default epel repo for EL 7
-
-    epel_rhel7: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+| Variable Name | Default Value | Description |
+| --- | --- | --- |
+| apigee_continue_on_warning | y | Defaults for internal environment OPDK setup settings |
+| vm_swappiness | 60 | Default value to limit swap file use |
+| epel_ol6 | https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm | Default epel repo for EL 6 |
+| epel_rhel7 | https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm | Default epel repo for EL 7 |
+| yum_packages | - bind-utils
+                 - chkconfig
+                 - curl
+                 - tar
+                 - wget
+                 - yum-utils
+                 - unzip
+                 - rsync
+                 - which
+                 - libselinux-python
+                 - nss
+                 - openssh-clients
+                 - openssh-server
+                 - grep
+                 - rpm
+                 - rng-tools
+                 - sed | Collection of yum package names to install with yum |
+| sysctl_minimum | 
+- { name: 'vm.swappiness', value: "{{ vm_swappiness }}" }
+- { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
+- { name: 'net.ipv6.conf.default.disable_ipv6', value: '1' }
+- { name: 'net.ipv4.tcp_fin_timeout', value: "{{ apigee_net_ipv4_tcp_fin_timeout }}" }
+- { name: 'vm.max_map_count', value: '{{ apigee_max_map_count }}' } | Minimum updates to sysctl for an Apigee node |                 
 
 Dependencies
 ------------
@@ -42,7 +56,7 @@ Example Playbook
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: apigee-opdk-setup-os-minimum }
 
 License
 -------
