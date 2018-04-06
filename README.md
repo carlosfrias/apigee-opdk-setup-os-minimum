@@ -47,18 +47,23 @@ packages are listed as:
     - rng-tools
     - sed
 
+## Sysctl Updates
 
-| sysctl_minimum | 
-- { name: 'vm.swappiness', value: "{{ vm_swappiness }}" }
-- { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
-- { name: 'net.ipv6.conf.default.disable_ipv6', value: '1' }
-- { name: 'net.ipv4.tcp_fin_timeout', value: "{{ apigee_net_ipv4_tcp_fin_timeout }}" }
-- { name: 'vm.max_map_count', value: '{{ apigee_max_map_count }}' } | Minimum updates to sysctl for an Apigee node |                 
+Sysctl require changes to ensure the smooth operation of Edge. The attributes and values are set using the `sysctl_minimum` 
+collection. The default values are listed as: 
+
+    sysctl_minimum:
+    - { name: 'vm.swappiness', value: "{{ vm_swappiness }}" }
+    - { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
+    - { name: 'net.ipv6.conf.default.disable_ipv6', value: '1' }
+    - { name: 'net.ipv4.tcp_fin_timeout', value: "{{ apigee_net_ipv4_tcp_fin_timeout }}" }
+    - { name: 'vm.max_map_count', value: '{{ apigee_max_map_count }}' }
+            
 
 Dependencies
 ------------
 
-This role depends on `[apigee-opdk-yum-packages](https://github.com/carlosfrias/apigee-opdk-yum-packages)`
+This role depends on [apigee-opdk-yum-packages](https://github.com/carlosfrias/apigee-opdk-yum-packages).
 
 Example Playbook
 ----------------
