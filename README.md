@@ -22,23 +22,7 @@ Role Variables
 | vm_swappiness | 60 | Default value to limit swap file use |
 | epel_ol6 | https://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm | Default epel repo for EL 6 |
 | epel_rhel7 | https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm | Default epel repo for EL 7 |
-| yum_packages | - bind-utils
-                 - chkconfig
-                 - curl
-                 - tar
-                 - wget
-                 - yum-utils
-                 - unzip
-                 - rsync
-                 - which
-                 - libselinux-python
-                 - nss
-                 - openssh-clients
-                 - openssh-server
-                 - grep
-                 - rpm
-                 - rng-tools
-                 - sed | Collection of yum package names to install with yum |
+| yum_packages | bind-utils, chkconfig, curl, tar, wget, yum-utils, unzip, rsync, which, libselinux-python, nss, openssh-clients, openssh-server, grep, rpm, rng-tools, sed | Collection of yum package names to install with yum |
 | sysctl_minimum | 
 - { name: 'vm.swappiness', value: "{{ vm_swappiness }}" }
 - { name: 'net.ipv6.conf.all.disable_ipv6', value: '1' }
