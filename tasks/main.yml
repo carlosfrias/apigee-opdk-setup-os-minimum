@@ -47,7 +47,7 @@
       enabled: yes
     when: not rngd_unit.changed
   become: yes
-  when: ansible_os_family == "RedHat" and ansible_distribution_major_version | version_compare("6", ">")
+  when: ansible_os_family == "RedHat" and ansible_distribution_major_version is version_compare("6", ">")
 
 - name: Update for apigee installation environment
   become: yes
