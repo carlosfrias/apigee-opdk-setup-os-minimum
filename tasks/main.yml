@@ -22,6 +22,11 @@
       enabled: yes
       state: started
 
+  - name: Ensure rngd config directory is in place
+    file:
+      path: /usr/lib/systemd/system
+      state: directory
+
   - name: Ensure rngd config file is in place
     file:
       path: /usr/lib/systemd/system/rngd.service
