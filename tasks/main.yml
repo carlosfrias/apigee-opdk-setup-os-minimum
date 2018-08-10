@@ -22,6 +22,11 @@
       enabled: yes
       state: started
 
+  - name: Ensure rngd config file is in place
+    file:
+      path: /usr/lib/systemd/system/rngd.service
+      state: touch
+
   - name: Patch rngd service unit
     replace:
       dest: /usr/lib/systemd/system/rngd.service
