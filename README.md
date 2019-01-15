@@ -10,7 +10,7 @@ Requirements
 The installation of Apigee OPDK requires root access as does the installation of the system updates that are the focus 
 of this role. Credentials must also be supplied to override the empty placeholders provided here. It is recommended that 
 credentials be consolidated into a single credentials.yml file that can be stored separately. It is assumed that 
-credentials are stored in ~/apigee-secure/credentials.yml. 
+credentials are stored in ~/.apigee-secure/credentials.yml. 
 
 # ipv6 Tag
 
